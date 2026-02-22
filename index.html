@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奶KATの百宝箱</title>
+<style>
+:root {
+  --bg: #0c0c1a;
+  --card: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.1);
+  --text: #eaeaea;
+  --subtext: #b0b0c0;
+  --glow: #79a9ff;
+  --accent: #4e8aff;
+  --hover: rgba(100,150,255,0.1);
+  --search: rgba(255,255,255,0.08);
+  --nav: #121225;
+  --banner: linear-gradient(135deg, #1a237e, #4a148c);
+}
+.theme-dark-blue {
+  --bg: #0a1024;
+  --card: rgba(20,30,60,0.4);
+  --border: rgba(70,130,200,0.2);
+  --text: #edf2ff;
+  --subtext: #b4c6e6;
+  --glow: #60a5fa;
+  --accent: #3b82f6;
+  --hover: rgba(59,130,246,0.15);
+  --search: rgba(30,41,59,0.6);
+  --nav: #0f172a;
+  --banner: linear-gradient(135deg, #1e3a8a, #3b82f6);
+}
+.theme-purple-night {
+  --bg: #100720;
+  --card: rgba(30,15,50,0.4);
+  --border: rgba(168,85,247,0.2);
+  --text: #f5f3ff;
+  --subtext: #d1d5db;
+  --glow: #a855f7;
+  --accent: #c084fc;
+  --hover: rgba(168,85,247,0.15);
+  --search: rgba(49,10,65,0.6);
+  --nav: #1e1b4b;
+  --banner: linear-gradient(135deg, #4c1d95, #a855f7);
+}
+.theme-neon-pink {
+  --bg: #0f0114;
+  --card: rgba(40,5,30,0.4);
+  --border: rgba(236,72,153,0.2);
+  --text: #fdf2f8;
+  --subtext: #fbcfe8;
+  --glow: #ec4899;
+  --accent: #f472b6;
+  --hover: rgba(236,72,153,0.15);
+  --search: rgba(60,3,40,0.6);
+  --nav: #1f0f1a;
+  --banner: linear-gradient(135deg, #831843, #ec4899);
+}
+.theme-cyber-green {
+  --bg: #05140b;
+  --card: rgba(10,40,20,0.4);
+  --border: rgba(16,185,129,0.2);
+  --text: #f0fdf4;
+  --subtext: #bbf7d0;
+  --glow: #10b981;
+  --accent: #34d399;
+  --hover: rgba(16,185,129,0.15);
+  --search: rgba(10,50,20,0.6);
+  --nav: #061e11;
+  --banner: linear-gradient(135deg, #065f46, #10b981);
+}
+.theme-clean-white {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --subtext: #64748b;
+  --glow: #3b82f6;
+  --accent: #3b82f6;
+  --hover: #f1f5f9;
+  --search: #ffffff;
+  --nav: #ffffff;
+  --banner: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background 0.3s, border-color 0.3s, color 0.2s, transform 0.2s;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 100px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.loader.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--nav);
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+  padding: 12px 0;
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.glow-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 6px #fff, 0 0 12px var(--glow), 0 0 24px var(--glow), 0 0 36px var(--glow);
+  white-space: nowrap;
+}
+.theme-switch {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.theme-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.theme-btn.active {
+  transform: scale(1.15);
+  border-color: var(--accent);
+}
+.t-blue { background: #3b82f6; }
+.t-purple { background: #a855f7; }
+.t-pink { background: #ec4899; }
+.t-green { background: #10b981; }
+.t-white { background: #ffffff; }
+.banner {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 30px 20px;
+  background: var(--banner);
+  border-radius: 20px;
+  text-align: center;
+  color: #fff;
+}
+.banner h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.banner p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+.search-bar {
+  max-width: 1200px;
+  margin: 30px auto 20px;
+  padding: 0 20px;
+}
+.search-input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--search);
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+}
+.search-input::placeholder {
+  color: var(--subtext);
+}
+.cats {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  padding: 0 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cat {
+  padding: 9px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cat.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.tool-card:hover {
+  transform: translateY(-5px);
+  background: var(--hover);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.tool-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tool-card h3::before {
+  content: "🔹";
+  font-size: 14px;
+}
+.tool-card p {
+  font-size: 14px;
+  color: var(--subtext);
+  line-height: 1.5;
+}
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--subtext);
+  font-size: 16px;
+}
+#toTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+  z-index: 99;
+}
+#toTop.show {
+  display: block;
+}
+.footer {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--subtext);
+  border-top: 1px solid var(--border);
+}
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .glow-title {
+    font-size: 20px;
+  }
+  .banner h1 {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="loader" id="loader"></div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="glow-title">奶KATの百宝箱</div>
+    <div class="theme-switch">
+      <div class="theme-btn t-blue active" data-theme="dark-blue"></div>
+      <div class="theme-btn t-purple" data-theme="purple-night"></div>
+      <div class="theme-btn t-pink" data-theme="neon-pink"></div>
+      <div class="theme-btn t-green" data-theme="cyber-green"></div>
+      <div class="theme-btn t-white" data-theme="clean-white"></div>
+    </div>
+  </div>
+</div>
+
+<div class="banner">
+  <h1>奶KATの百宝箱</h1>
+  <p>收录全网优质免费在线工具，免登录、无广告、即用即走</p>
+</div>
+
+<div class="search-bar">
+  <input class="search-input" id="search" placeholder="🔍 搜索工具名称/简介..." type="text">
+</div>
+
+<div class="cats">
+  <div class="cat active" data-cat="all">全部</div>
+  <div class="cat" data-cat="dev">开发工具</div>
+  <div class="cat" data-cat="img">图片设计</div>
+  <div class="cat" data-cat="pdf">PDF处理</div>
+  <div class="cat" data-cat="file">文件转换</div>
+  <div class="cat" data-cat="util">实用工具</div>
+  <div class="cat" data-cat="video">视频音频</div>
+</div>
+
+<div class="container" id="list">
+<a class="tool-card" data-tags="dev" href="https://codepen.io/" target="_blank"><h3>CodePen</h3><p>在线前端代码编辑器，实时预览HTML/CSS/JS</p></a>
+<a class="tool-card" data-tags="dev" href="https://jsfiddle.net/" target="_blank"><h3>JSFiddle</h3><p>轻量级前端在线调试工具</p></a>
+<a class="tool-card" data-tags="dev" href="https://codesandbox.io/" target="_blank"><h3>CodeSandbox</h3><p>在线IDE，支持Vue/React项目</p></a>
+<a class="tool-card" data-tags="dev" href="https://stackblitz.com/" target="_blank"><h3>StackBlitz</h3><p>浏览器里的VS Code，超快启动</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.json.cn/" target="_blank"><h3>JSON.cn</h3><p>JSON格式化、校验、压缩、高亮</p></a>
+<a class="tool-card" data-tags="dev" href="https://jsonlint.com/" target="_blank"><h3>JSONLint</h3><p>JSON校验与格式化工具</p></a>
+<a class="tool-card" data-tags="dev" href="https://regex101.com/" target="_blank"><h3>Regex101</h3><p>在线正则表达式测试、调试</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.diffchecker.com/" target="_blank"><h3>Diff Checker</h3><p>文本/代码对比，快速找差异</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.ip138.com/" target="_blank"><h3>IP138</h3><p>IP查询、域名信息、手机号归属地</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.jsdelivr.com/" target="_blank"><h3>JsDelivr</h3><p>免费高速CDN，前端资源加速</p></a>
+<a class="tool-card" data-tags="dev" href="https://unpkg.com/" target="_blank"><h3>unpkg</h3><p>npm包快速CDN服务</p></a>
+<a class="tool-card" data-tags="dev" href="https://caniuse.com/" target="_blank"><h3>Can I Use</h3><p>查询浏览器CSS/JS兼容性</p></a>
+<a class="tool-card" data-tags="img" href="https://www.remove.bg/" target="_blank"><h3>Remove.bg</h3><p>一键自动抠图去背景</p></a>
+<a class="tool-card" data-tags="img" href="https://tinypng.com/" target="_blank"><h3>TinyPNG</h3><p>智能压缩图片，几乎无损</p></a>
+<a class="tool-card" data-tags="img" href="https://squoosh.app/" target="_blank"><h3>Squoosh</h3><p>谷歌出品图片压缩工具</p></a>
+<a class="tool-card" data-tags="img" href="https://www.iloveimg.com/zh-cn" target="_blank"><h3>ILoveIMG</h3><p>图片裁剪、旋转、转换、压缩</p></a>
+<a class="tool-card" data-tags="img" href="https://www.canva.com/" target="_blank"><h3>Canva 可画</h3><p>海报、封面、PPT、视频设计</p></a>
+<a class="tool-card" data-tags="img" href="https://unsplash.com/" target="_blank"><h3>Unsplash</h3><p>免费可商用高清图片</p></a>
+<a class="tool-card" data-tags="img" href="https://www.pexels.com/" target="_blank"><h3>Pexels</h3><p>免费图片+视频素材库</p></a>
+<a class="tool-card" data-tags="img" href="https://pixabay.com/" target="_blank"><h3>Pixabay</h3><p>无版权图片、视频、音频</p></a>
+<a class="tool-card" data-tags="img" href="https://www.coolors.co/" target="_blank"><h3>Coolors</h3><p>快速生成高颜值配色</p></a>
+<a class="tool-card" data-tags="img" href="https://uigradients.com/" target="_blank"><h3>UI Gradients</h3><p>渐变色CSS一键复制</p></a>
+<a class="tool-card" data-tags="img" href="https://www.fontspace.com/" target="_blank"><h3>FontSpace</h3><p>免费可商用字体下载</p></a>
+<a class="tool-card" data-tags="img" href="https://fonts.google.com/" target="_blank"><h3>Google Fonts</h3><p>谷歌免费英文字体库</p></a>
+<a class="tool-card" data-tags="pdf" href="https://www.ilovepdf.com/zh-cn" target="_blank"><h3>ILovePDF</h3><p>PDF合并、拆分、压缩、转换</p></a>
+<a class="tool-card" data-tags="pdf" href="https://www.pdf24.org/zh/" target="_blank"><h3>PDF24</h3><p>PDF全能工具箱，全免费</p></a>
+<a class="tool-card" data-tags="pdf" href="https://smallpdf.com/cn" target="_blank"><h3>SmallPDF</h3><p>简洁好用的PDF处理工具</p></a>
+<a class="tool-card" data-tags="file" href="https://convertio.co/zh/" target="_blank"><h3>Convertio</h3><p>全格式文件转换</p></a>
+<a class="tool-card" data-tags="file" href="https://10015.io/" target="_blank"><h3>10015 工具集</h3><p>格式转换、压缩、文本处理</p></a>
+<a class="tool-card" data-tags="util" href="https://time.is/" target="_blank"><h3>Time.is</h3><p>精确世界时间、时区转换</p></a>
+<a class="tool-card" data-tags="util" href="https://www.qr-code-generator.com/" target="_blank"><h3>二维码生成</h3><p>网址、文本、WiFi二维码</p></a>
+<a class="tool-card" data-tags="util" href="https://iruler.herokuapp.com/" target="_blank"><h3>在线尺子</h3><p>在线屏幕尺寸测量</p></a>
+<a class="tool-card" data-tags="util" href="https://www.notion.so/" target="_blank"><h3>Notion</h3><p>全能笔记、文档、知识库</p></a>
+<a class="tool-card" data-tags="util" href="https://tldraw.com/" target="_blank"><h3>Tldraw</h3><p>极简在线白板、思维导图</p></a>
+<a class="tool-card" data-tags="util" href="https://excalidraw.com/" target="_blank"><h3>Excalidraw</h3><p>手绘风格白板流程图</p></a>
+<a class="tool-card" data-tags="util" href="https://www.screenpal.com/" target="_blank"><h3>ScreenPal</h3><p>免费屏幕录制与截图</p></a>
+<a class="tool-card" data-tags="util" href="https://www.printfriendly.com/" target="_blank"><h3>PrintFriendly</h3><p>网页干净打印、去广告</p></a>
+<a class="tool-card" data-tags="util" href="https://www.mistakes.info/" target="_blank"><h3>错别字检查</h3><p>快速检查文本错别字</p></a>
+<a class="tool-card" data-tags="util" href="https://www.random.org/" target="_blank"><h3>随机数生成</h3><p>真随机数、抽奖、抽签</p></a>
+<a class="tool-card" data-tags="video" href="https://www.y2mate.com/zh-cn" target="_blank"><h3>Y2mate</h3><p>在线视频下载解析</p></a>
+<a class="tool-card" data-tags="video" href="https://www.veed.io/" target="_blank"><h3>Veed</h3><p>在线视频剪辑、加字幕</p></a>
+<a class="tool-card" data-tags="video" href="https://www.capcut.com/zh-cn/" target="_blank"><h3>CapCut 剪映</h3><p>网页版剪映，免费剪辑</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.w3schools.com/" target="_blank"><h3>W3Schools</h3><p>前端编程学习教程</p></a>
+<a class="tool-card" data-tags="dev" href="https://developer.mozilla.org/zh-CN/" target="_blank"><h3>MDN</h3><p>官方Web技术文档</p></a>
+<a class="tool-card" data-tags="dev" href="https://www.toptal.com/developers/gitignore" target="_blank"><h3>gitignore.io</h3><p>生成Git忽略文件</p></a>
+<a class="tool-card" data-tags="img" href="https://pixlr.com/zh-cn/" target="_blank"><h3>Pixlr</h3><p>在线PS，功能强大</p></a>
+<a class="tool-card" data-tags="img" href="https://www.photopea.com/" target="_blank"><h3>Photopea</h3><p>网页版Photoshop</p></a>
+<a class="tool-card" data-tags="util" href="https://stopwatch.online/" target="_blank"><h3>在线秒表</h3><p>精准计时、倒计时</p></a>
+<a class="tool-card" data-tags="util" href="https://noisecollector.org/" target="_blank"><h3>分贝测试</h3><p>麦克风测环境噪音</p></a>
+<a class="tool-card" data-tags="util" href="https://www.unitconverters.net/" target="_blank"><h3>单位换算</h3><p>长度、重量、温度、速度</p></a>
+<a class="tool-card" data-tags="util" href="https://www.xe.com/zh/currencyconverter/" target="_blank"><h3>汇率换算</h3><p>实时全球货币换算</p></a>
+<a class="tool-card" data-tags="util" href="https://passwordsgenerator.net/" target="_blank"><h3>密码生成</h3><p>高强度随机密码</p></a>
+<a class="tool-card" data-tags="util" href="https://www.uuidgenerator.net/" target="_blank"><h3>UUID生成</h3><p>唯一标识符生成</p></a>
+<a class="tool-card" data-tags="util" href="https://emn178.github.io/online-tools/md5.html" target="_blank"><h3>MD5加密</h3><p>文本MD5加密计算</p></a>
+<a class="tool-card" data-tags="util" href="https://emn178.github.io/online-tools/sha256.html" target="_blank"><h3>SHA加密</h3><p>SHA1/SHA256加密</p></a>
+<a class="tool-card" data-tags="util" href="https://www.base64encode.org/" target="_blank"><h3>Base64编码</h3><p>Base64加解密</p></a>
+<a class="tool-card" data-tags="util" href="https://www.urlencoder.org/" target="_blank"><h3>URL编码</h3><p>网址编码解码</p></a>
+<a class="tool-card" data-tags="util" href="https://r12a.github.io/uniview/" target="_blank"><h3>Unicode转换</h3><p>中文与Unicode互转</p></a>
+<a class="tool-card" data-tags="util" href="https://www.asciitohex.com/" target="_blank"><h3>ASCII转换</h3><p>字符与ASCII互转</p></a>
+<a class="tool-card" data-tags="util" href="https://convertcase.net/" target="_blank"><h3>大小写转换</h3><p>英文大小写快速切换</p></a>
+<a class="tool-card" data-tags="util" href="https://charactercounttool.com/" target="_blank"><h3>字数统计</h3><p>文字、字符、行数统计</p></a>
+<a class="tool-card" data-tags="util" href="https://www.zhconvert.org/" target="_blank"><h3>简繁转换</h3><p>简体繁体互相转换</p></a>
+<a class="tool-card" data-tags="util" href="https://pinyinConverter.com/" target="_blank"><h3>拼音转换</h3><p>汉字转拼音</p></a>
+<a class="tool-card" data-tags="util" href="https://ocr.space/" target="_blank"><h3>图片转文字</h3><p>OCR文字识别</p></a>
+<a class="tool-card" data-tags="util" href="https://www.removeduplicates.net/" target="_blank"><h3>文本去重</h3><p>自动去除重复行</p></a>
+<a class="tool-card" data-tags="util" href="https://textreverse.net/" target="_blank"><h3>文本倒序</h3><p>文字行倒序排列</p></a>
+<a class="tool-card" data-tags="util" href="https://removeblanklines.com/" target="_blank"><h3>空行删除</h3><p>一键清理多余空行</p></a>
+<a class="tool-card" data-tags="util" href="https://www.rapidtables.com/convert/number/base-converter.html" target="_blank"><h3>进制转换</h3><p>二/八/十/十六进制互转</p></a>
+<a class="tool-card" data-tags="util" href="https://www.epochconverter.com/" target="_blank"><h3>时间戳转换</h3><p>Unix时间戳格式化</p></a>
+<a class="tool-card" data-tags="util" href="https://htmlcolorcodes.com/color-picker/" target="_blank"><h3>颜色拾取</h3><p>在线取色器</p></a>
+<a class="tool-card" data-tags="util" href="https://www.base64-image.de/" target="_blank"><h3>图片转Base64</h3><p>图片转编码字符串</p></a>
+<a class="tool-card" data-tags="util" href="https://www.favicon-generator.org/" target="_blank"><h3>ICO转换</h3><p>图片转图标文件</p></a>
+<a class="tool-card" data-tags="util" href="https://magnetdl.com/" target="_blank"><h3>磁力搜索</h3><p>资源磁力链接查询</p></a>
+<a class="tool-card" data-tags="util" href="https://bitly.com/" target="_blank"><h3>短链接</h3><p>网址缩短服务</p></a>
+<a class="tool-card" data-tags="util" href="https://www.browserinfo.com/" target="_blank"><h3>浏览器信息</h3><p>查看设备UA信息</p></a>
+</div>
+
+<button id="toTop">↑</button>
+
+<div class="footer">
+  奶KATの百宝箱 © 2026 | tools.list.naikat.xyz<br>
+  收录100+免费优质在线工具，持续更新
+</div>
+
+<script>
+const loader = document.getElementById('loader');
+window.addEventListener('load', () => {
+  setTimeout(() => loader.classList.add('gone'), 500);
+});
+
+const themes = document.querySelectorAll('.theme-btn');
+themes.forEach(btn => {
+  btn.addEventListener('click', () => {
+    themes.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.body.className = btn.dataset.theme;
+    localStorage.setItem('theme', btn.dataset.theme);
+  });
+});
+const saved = localStorage.getItem('theme');
+if(saved) {
+  document.body.className = saved;
+  document.querySelector(`[data-theme="${saved}"]`).classList.add('active');
+  document.querySelector('.theme-btn.active').classList.remove('active');
+}
+
+const cats = document.querySelectorAll('.cat');
+const cards = document.querySelectorAll('.tool-card');
+cats.forEach(cat => {
+  cat.addEventListener('click', () => {
+    cats.forEach(c => c.classList.remove('active'));
+    cat.classList.add('active');
+    const t = cat.dataset.cat;
+    cards.forEach(c => {
+      if(t === 'all' || c.dataset.tags.includes(t)) c.style.display = 'block';
+      else c.style.display = 'none';
+    });
+  });
+});
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const kw = search.value.toLowerCase().trim();
+  cards.forEach(c => {
+    const n = c.querySelector('h3').innerText.toLowerCase();
+    const d = c.querySelector('p').innerText.toLowerCase();
+    if(n.includes(kw) || d.includes(kw)) c.style.display = 'block';
+    else c.style.display = 'none';
+  });
+});
+
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  if(window.scrollY > 300) toTop.classList.add('show');
+  else toTop.classList.remove('show');
+});
+toTop.addEventListener('click', () => {
+  window.scrollTo({ top:0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
