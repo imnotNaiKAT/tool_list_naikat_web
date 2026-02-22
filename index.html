@@ -164,68 +164,63 @@ body {
   transform: scale(1.15);
   border-color: var(--accent);
 }
-/* 登录/注册样式（适配主题） */
-.auth-wrapper {
+.t-blue { background: #3b82f6; }
+.t-purple { background: #a855f7; }
+.t-pink { background: #ec4899; }
+.t-green { background: #10b981; }
+.t-white { background: #ffffff; }
+
+/* 登录栏 单独一行 绝对能点 */
+.auth-bar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  background: var(--nav);
+  border-bottom: 1px solid var(--border);
 }
 .auth-input {
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: var(--search);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   font-size: 14px;
-  width: 120px;
+  width: 140px;
   outline: none;
 }
-.auth-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 8px rgba(var(--glow-rgb), 0.2);
-}
 .auth-btn {
-  padding: 8px 14px;
-  background: rgba(var(--glow-rgb), 0.1);
-  border: 1px solid var(--border);
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--accent);
   border-radius: 8px;
-  color: var(--glow);
+  color: var(--accent);
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s;
 }
 .auth-btn:hover {
-  background: rgba(var(--glow-rgb), 0.2);
-  border-color: var(--accent);
-  box-shadow: 0 0 8px rgba(var(--glow-rgb), 0.3);
+  background: rgba(255,255,255,0.1);
 }
-.user-info {
-  color: var(--glow);
+.user-bar {
+  color: var(--accent);
   font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 .logout-btn {
-  padding: 6px 10px;
+  padding: 6px 12px;
   background: rgba(236,72,153,0.1);
-  border: 1px solid var(--border);
+  border: 1px solid #ec4899;
   border-radius: 6px;
   color: #ec4899;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
 }
-.logout-btn:hover {
-  background: rgba(236,72,153,0.2);
-  box-shadow: 0 0 6px rgba(236,72,153,0.3);
-}
-/* 主题色值适配 */
-.theme-dark-blue .auth-btn { --glow-rgb: 96, 165, 250; }
-.theme-purple-night .auth-btn { --glow-rgb: 168, 85, 247; }
-.theme-neon-pink .auth-btn { --glow-rgb: 236, 72, 153; }
-.theme-cyber-green .auth-btn { --glow-rgb: 16, 185, 129; }
-.theme-clean-white .auth-btn { --glow-rgb: 59, 130, 246; }
 
 .banner {
   max-width: 1200px;
@@ -367,14 +362,6 @@ body {
   .banner h1 {
     font-size: 24px;
   }
-  .auth-input {
-    width: 100px;
-    padding: 6px 8px;
-  }
-  .auth-btn {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
 }
 </style>
 </head>
@@ -385,21 +372,6 @@ body {
 <div class="header">
   <div class="header-inner">
     <div class="glow-title">奶KATの百宝箱</div>
-    
-    <!-- 登录/注册区域（整合到导航栏） -->
-    <div class="auth-wrapper">
-      <div id="login-box">
-        <input class="auth-input" id="username" placeholder="用户名" type="text">
-        <input class="auth-input" id="password" placeholder="密码" type="password">
-        <button class="auth-btn" onclick="login()">登录</button>
-        <button class="auth-btn" onclick="register()">注册</button>
-      </div>
-      <div id="user-info" style="display: none;">
-        欢迎，<span id="user-name"></span>
-        <button class="logout-btn" onclick="logout()">退出</button>
-      </div>
-    </div>
-
     <div class="theme-switch">
       <div class="theme-btn t-blue active" data-theme="dark-blue"></div>
       <div class="theme-btn t-purple" data-theme="purple-night"></div>
@@ -407,6 +379,20 @@ body {
       <div class="theme-btn t-green" data-theme="cyber-green"></div>
       <div class="theme-btn t-white" data-theme="clean-white"></div>
     </div>
+  </div>
+</div>
+
+<!-- 登录栏 单独一行 绝对能点 -->
+<div class="auth-bar">
+  <div id="login-box">
+    <input class="auth-input" id="username" placeholder="用户名">
+    <input class="auth-input" id="password" type="password" placeholder="密码">
+    <button class="auth-btn" onclick="login()">登录</button>
+    <button class="auth-btn" onclick="register()">注册</button>
+  </div>
+  <div class="user-bar" id="user-info" style="display:none">
+    欢迎回来，<span id="uname"></span>
+    <button class="logout-btn" onclick="logout()">退出登录</button>
   </div>
 </div>
 
@@ -503,7 +489,7 @@ body {
 <a class="tool-card" data-tags="util" href="https://www.base64-image.de/" target="_blank"><h3>图片转Base64</h3><p>图片转编码字符串</p></a>
 <a class="tool-card" data-tags="util" href="https://www.favicon-generator.org/" target="_blank"><h3>ICO转换</h3><p>图片转图标文件</p></a>
 <a class="tool-card" data-tags="util" href="https://magnetdl.com/" target="_blank"><h3>磁力搜索</h3><p>资源磁力链接查询</p></a>
-<a class="tool-card" data-tags="util" href="https://bitly.com/" target="_blank"><h3>短链接</h3><p>网址缩短服务</p></a>
+<a class="tool-card" data-tags="util" href="https://bitly.com/" target="_blank><h3>短链接</h3><p>网址缩短服务</p></a>
 <a class="tool-card" data-tags="util" href="https://www.browserinfo.com/" target="_blank"><h3>浏览器信息</h3><p>查看设备UA信息</p></a>
 </div>
 
@@ -515,16 +501,15 @@ body {
 </div>
 
 <script>
-// Worker接口地址（已填好）
 const API = "https://api-tools-list.tanjingwen2023-8fa.workers.dev";
 
-// 加载动画
+// 加载
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
   setTimeout(() => loader.classList.add('gone'), 500);
 });
 
-// 主题切换
+// 主题
 const themes = document.querySelectorAll('.theme-btn');
 themes.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -540,7 +525,7 @@ if(saved) {
   document.querySelector(`[data-theme="${saved}"]`).classList.add('active');
 }
 
-// 分类筛选
+// 分类
 const cats = document.querySelectorAll('.cat');
 const cards = document.querySelectorAll('.tool-card');
 cats.forEach(cat => {
@@ -555,7 +540,7 @@ cats.forEach(cat => {
   });
 });
 
-// 搜索功能
+// 搜索
 const search = document.getElementById('search');
 search.addEventListener('input', () => {
   const kw = search.value.toLowerCase().trim();
@@ -567,7 +552,7 @@ search.addEventListener('input', () => {
   });
 });
 
-// 返回顶部
+// 回到顶部
 const toTop = document.getElementById('toTop');
 window.addEventListener('scroll', () => {
   if(window.scrollY > 300) toTop.classList.add('show');
@@ -577,107 +562,58 @@ toTop.addEventListener('click', () => {
   window.scrollTo({ top:0, behavior: 'smooth' });
 });
 
-// 登录/注册核心功能
-// 页面加载时检查登录状态
-window.onload = function() {
-  const token = localStorage.getItem("user-token");
-  if (token) {
-    verifyTokenAndShowUser(token);
-  }
+// 登录
+window.onload = () => {
+  const t = localStorage.getItem("token");
+  if (t) setUser(t);
 };
 
-// 验证Token并显示用户信息
-function verifyTokenAndShowUser(token) {
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  location.reload();
+}
+
+function setUser(token) {
   try {
-    const userData = JSON.parse(atob(token));
-    // 检查Token是否过期
-    if (userData.exp < Date.now()) {
-      logout();
-      alert("登录已过期，请重新登录");
-      return;
-    }
-    // 显示用户信息，隐藏登录框
+    const obj = JSON.parse(atob(token));
+    if (obj.exp < Date.now()) { logout(); return; }
+    document.getElementById("uname").innerText = obj.user;
     document.getElementById("login-box").style.display = "none";
     document.getElementById("user-info").style.display = "flex";
-    document.getElementById("user-name").textContent = userData.user;
-  } catch (e) {
-    logout();
-    alert("登录信息无效，请重新登录");
-  }
+  } catch (e) { logout(); }
 }
 
-// 登录功能
 async function login() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!username || !password) {
-    alert("用户名和密码不能为空！");
-    return;
-  }
-
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
+  if (!u || !p) { alert("请输入用户名和密码"); return; }
   try {
-    const response = await fetch(`${API}/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ username, password })
+    const r = await fetch(API+"/api/login", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ username:u, password:p })
     });
-
-    const result = await response.json();
-    if (result.ok) {
-      localStorage.setItem("user-token", result.token);
-      verifyTokenAndShowUser(result.token);
-      alert("登录成功！");
-    } else {
-      alert(`登录失败：${result.msg}`);
-    }
-  } catch (error) {
-    alert("登录失败：网络错误或服务器未响应");
-    console.error("登录错误：", error);
-  }
+    const d = await r.json();
+    if (d.ok) { localStorage.setItem("token", d.token); setUser(d.token); alert("登录成功"); }
+    else alert(d.msg);
+  } catch(e){ alert("登录失败"); }
 }
 
-// 注册功能
 async function register() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!username || !password) {
-    alert("用户名和密码不能为空！");
-    return;
-  }
-
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
+  if (!u || !p) { alert("请输入用户名和密码"); return; }
   try {
-    const response = await fetch(`${API}/api/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ username, password })
+    const r = await fetch(API+"/api/register", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ username:u, password:p })
     });
-
-    const result = await response.json();
-    alert(result.msg);
-    // 注册成功后清空输入框
-    if (result.ok) {
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
-    }
-  } catch (error) {
-    alert("注册失败：网络错误或服务器未响应");
-    console.error("注册错误：", error);
-  }
-}
-
-// 退出登录
-function logout() {
-  localStorage.removeItem("user-token");
-  document.getElementById("user-info").style.display = "none";
-  document.getElementById("login-box").style.display = "flex";
-  document.getElementById("username").value = "";
-  document.getElementById("password").value = "";
+    const d = await r.json();
+    alert(d.msg);
+  } catch(e){ alert("注册失败"); }
 }
 </script>
 </body>
