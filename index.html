@@ -170,7 +170,7 @@ body {
 .t-green { background: #10b981; }
 .t-white { background: #ffffff; }
 
-/* 登录栏 单独一行 绝对能点 */
+/* 登录栏 */
 .auth-bar {
   max-width: 1200px;
   margin: 0 auto;
@@ -212,14 +212,199 @@ body {
   align-items: center;
   gap: 10px;
 }
-.logout-btn {
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+.logout-btn, .profile-btn {
   padding: 6px 12px;
-  background: rgba(236,72,153,0.1);
-  border: 1px solid #ec4899;
   border-radius: 6px;
-  color: #ec4899;
   font-size: 13px;
   cursor: pointer;
+  border: 1px solid;
+}
+.logout-btn {
+  background: rgba(236,72,153,0.1);
+  border-color: #ec4899;
+  color: #ec4899;
+}
+.profile-btn {
+  background: rgba(59,130,246,0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* 工具卡片新增收藏/点赞按钮 */
+.tool-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.tool-card:hover {
+  transform: translateY(-5px);
+  background: var(--hover);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.tool-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tool-card h3::before {
+  content: "🔹";
+  font-size: 14px;
+}
+.tool-card p {
+  font-size: 14px;
+  color: var(--subtext);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.tool-actions {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.05);
+  color: var(--subtext);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.action-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+.action-btn.favorited {
+  color: #ec4899;
+  background: rgba(236,72,153,0.1);
+}
+.action-btn.liked {
+  color: #10b981;
+  background: rgba(16,185,129,0.1);
+}
+
+/* 个人中心弹窗 */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+.modal.show {
+  display: flex;
+}
+.modal-content {
+  background: var(--nav);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: var(--subtext);
+  font-size: 20px;
+  cursor: pointer;
+}
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  margin-bottom: 10px;
+}
+.profile-nickname {
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-username {
+  color: var(--subtext);
+  font-size: 14px;
+}
+.profile-create {
+  color: var(--subtext);
+  font-size: 12px;
+  margin-top: 5px;
+}
+.profile-form {
+  margin: 20px 0;
+}
+.profile-input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: var(--search);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  outline: none;
+}
+.profile-save {
+  width: 100%;
+  padding: 12px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.my-tools-title {
+  font-size: 16px;
+  margin: 20px 0 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.my-tools-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+.my-tool-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-tool-remove {
+  color: #ec4899;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 .banner {
@@ -287,37 +472,6 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
 }
-.tool-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.tool-card:hover {
-  transform: translateY(-5px);
-  background: var(--hover);
-  border-color: var(--accent);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.tool-card h3 {
-  font-size: 18px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.tool-card h3::before {
-  content: "🔹";
-  font-size: 14px;
-}
-.tool-card p {
-  font-size: 14px;
-  color: var(--subtext);
-  line-height: 1.5;
-}
 .empty {
   grid-column: 1/-1;
   text-align: center;
@@ -362,6 +516,9 @@ body {
   .banner h1 {
     font-size: 24px;
   }
+  .auth-input {
+    width: 120px;
+  }
 }
 </style>
 </head>
@@ -382,7 +539,7 @@ body {
   </div>
 </div>
 
-<!-- 登录栏 单独一行 绝对能点 -->
+<!-- 登录栏 -->
 <div class="auth-bar">
   <div id="login-box">
     <input class="auth-input" id="username" placeholder="用户名">
@@ -391,8 +548,10 @@ body {
     <button class="auth-btn" onclick="register()">注册</button>
   </div>
   <div class="user-bar" id="user-info" style="display:none">
+    <img src="" alt="头像" class="user-avatar" id="user-avatar">
     欢迎回来，<span id="uname"></span>
-    <button class="logout-btn" onclick="logout()">退出登录</button>
+    <button class="profile-btn" onclick="showProfile()">个人中心</button>
+    <button class="logout-btn" onclick="logout()">退出</button>
   </div>
 </div>
 
@@ -413,84 +572,38 @@ body {
   <div class="cat" data-cat="file">文件转换</div>
   <div class="cat" data-cat="util">实用工具</div>
   <div class="cat" data-cat="video">视频音频</div>
+  <div class="cat" data-cat="myfavs" id="myfavs-cat" style="display:none">我的收藏</div>
+  <div class="cat" data-cat="mylikes" id="mylikes-cat" style="display:none">我的点赞</div>
 </div>
 
 <div class="container" id="list">
-<a class="tool-card" data-tags="dev" href="https://codepen.io/" target="_blank"><h3>CodePen</h3><p>在线前端代码编辑器，实时预览HTML/CSS/JS</p></a>
-<a class="tool-card" data-tags="dev" href="https://jsfiddle.net/" target="_blank"><h3>JSFiddle</h3><p>轻量级前端在线调试工具</p></a>
-<a class="tool-card" data-tags="dev" href="https://codesandbox.io/" target="_blank"><h3>CodeSandbox</h3><p>在线IDE，支持Vue/React项目</p></a>
-<a class="tool-card" data-tags="dev" href="https://stackblitz.com/" target="_blank"><h3>StackBlitz</h3><p>浏览器里的VS Code，超快启动</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.json.cn/" target="_blank"><h3>JSON.cn</h3><p>JSON格式化、校验、压缩、高亮</p></a>
-<a class="tool-card" data-tags="dev" href="https://jsonlint.com/" target="_blank"><h3>JSONLint</h3><p>JSON校验与格式化工具</p></a>
-<a class="tool-card" data-tags="dev" href="https://regex101.com/" target="_blank"><h3>Regex101</h3><p>在线正则表达式测试、调试</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.diffchecker.com/" target="_blank"><h3>Diff Checker</h3><p>文本/代码对比，快速找差异</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.ip138.com/" target="_blank"><h3>IP138</h3><p>IP查询、域名信息、手机号归属地</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.jsdelivr.com/" target="_blank"><h3>JsDelivr</h3><p>免费高速CDN，前端资源加速</p></a>
-<a class="tool-card" data-tags="dev" href="https://unpkg.com/" target="_blank"><h3>unpkg</h3><p>npm包快速CDN服务</p></a>
-<a class="tool-card" data-tags="dev" href="https://caniuse.com/" target="_blank"><h3>Can I Use</h3><p>查询浏览器CSS/JS兼容性</p></a>
-<a class="tool-card" data-tags="img" href="https://www.remove.bg/" target="_blank"><h3>Remove.bg</h3><p>一键自动抠图去背景</p></a>
-<a class="tool-card" data-tags="img" href="https://tinypng.com/" target="_blank"><h3>TinyPNG</h3><p>智能压缩图片，几乎无损</p></a>
-<a class="tool-card" data-tags="img" href="https://squoosh.app/" target="_blank"><h3>Squoosh</h3><p>谷歌出品图片压缩工具</p></a>
-<a class="tool-card" data-tags="img" href="https://www.iloveimg.com/zh-cn" target="_blank"><h3>ILoveIMG</h3><p>图片裁剪、旋转、转换、压缩</p></a>
-<a class="tool-card" data-tags="img" href="https://www.canva.com/" target="_blank"><h3>Canva 可画</h3><p>海报、封面、PPT、视频设计</p></a>
-<a class="tool-card" data-tags="img" href="https://unsplash.com/" target="_blank"><h3>Unsplash</h3><p>免费可商用高清图片</p></a>
-<a class="tool-card" data-tags="img" href="https://www.pexels.com/" target="_blank"><h3>Pexels</h3><p>免费图片+视频素材库</p></a>
-<a class="tool-card" data-tags="img" href="https://pixabay.com/" target="_blank"><h3>Pixabay</h3><p>无版权图片、视频、音频</p></a>
-<a class="tool-card" data-tags="img" href="https://www.coolors.co/" target="_blank"><h3>Coolors</h3><p>快速生成高颜值配色</p></a>
-<a class="tool-card" data-tags="img" href="https://uigradients.com/" target="_blank"><h3>UI Gradients</h3><p>渐变色CSS一键复制</p></a>
-<a class="tool-card" data-tags="img" href="https://www.fontspace.com/" target="_blank"><h3>FontSpace</h3><p>免费可商用字体下载</p></a>
-<a class="tool-card" data-tags="img" href="https://fonts.google.com/" target="_blank"><h3>Google Fonts</h3><p>谷歌免费英文字体库</p></a>
-<a class="tool-card" data-tags="pdf" href="https://www.ilovepdf.com/zh-cn" target="_blank"><h3>ILovePDF</h3><p>PDF合并、拆分、压缩、转换</p></a>
-<a class="tool-card" data-tags="pdf" href="https://www.pdf24.org/zh/" target="_blank"><h3>PDF24</h3><p>PDF全能工具箱，全免费</p></a>
-<a class="tool-card" data-tags="pdf" href="https://smallpdf.com/cn" target="_blank"><h3>SmallPDF</h3><p>简洁好用的PDF处理工具</p></a>
-<a class="tool-card" data-tags="file" href="https://convertio.co/zh/" target="_blank"><h3>Convertio</h3><p>全格式文件转换</p></a>
-<a class="tool-card" data-tags="file" href="https://10015.io/" target="_blank"><h3>10015 工具集</h3><p>格式转换、压缩、文本处理</p></a>
-<a class="tool-card" data-tags="util" href="https://time.is/" target="_blank"><h3>Time.is</h3><p>精确世界时间、时区转换</p></a>
-<a class="tool-card" data-tags="util" href="https://www.qr-code-generator.com/" target="_blank"><h3>二维码生成</h3><p>网址、文本、WiFi二维码</p></a>
-<a class="tool-card" data-tags="util" href="https://iruler.herokuapp.com/" target="_blank"><h3>在线尺子</h3><p>在线屏幕尺寸测量</p></a>
-<a class="tool-card" data-tags="util" href="https://www.notion.so/" target="_blank"><h3>Notion</h3><p>全能笔记、文档、知识库</p></a>
-<a class="tool-card" data-tags="util" href="https://tldraw.com/" target="_blank"><h3>Tldraw</h3><p>极简在线白板、思维导图</p></a>
-<a class="tool-card" data-tags="util" href="https://excalidraw.com/" target="_blank"><h3>Excalidraw</h3><p>手绘风格白板流程图</p></a>
-<a class="tool-card" data-tags="util" href="https://www.screenpal.com/" target="_blank"><h3>ScreenPal</h3><p>免费屏幕录制与截图</p></a>
-<a class="tool-card" data-tags="util" href="https://www.printfriendly.com/" target="_blank"><h3>PrintFriendly</h3><p>网页干净打印、去广告</p></a>
-<a class="tool-card" data-tags="util" href="https://www.mistakes.info/" target="_blank"><h3>错别字检查</h3><p>快速检查文本错别字</p></a>
-<a class="tool-card" data-tags="util" href="https://www.random.org/" target="_blank"><h3>随机数生成</h3><p>真随机数、抽奖、抽签</p></a>
-<a class="tool-card" data-tags="video" href="https://www.y2mate.com/zh-cn" target="_blank"><h3>Y2mate</h3><p>在线视频下载解析</p></a>
-<a class="tool-card" data-tags="video" href="https://www.veed.io/" target="_blank"><h3>Veed</h3><p>在线视频剪辑、加字幕</p></a>
-<a class="tool-card" data-tags="video" href="https://www.capcut.com/zh-cn/" target="_blank"><h3>CapCut 剪映</h3><p>网页版剪映，免费剪辑</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.w3schools.com/" target="_blank"><h3>W3Schools</h3><p>前端编程学习教程</p></a>
-<a class="tool-card" data-tags="dev" href="https://developer.mozilla.org/zh-CN/" target="_blank"><h3>MDN</h3><p>官方Web技术文档</p></a>
-<a class="tool-card" data-tags="dev" href="https://www.toptal.com/developers/gitignore" target="_blank"><h3>gitignore.io</h3><p>生成Git忽略文件</p></a>
-<a class="tool-card" data-tags="img" href="https://pixlr.com/zh-cn/" target="_blank"><h3>Pixlr</h3><p>在线PS，功能强大</p></a>
-<a class="tool-card" data-tags="img" href="https://www.photopea.com/" target="_blank"><h3>Photopea</h3><p>网页版Photoshop</p></a>
-<a class="tool-card" data-tags="util" href="https://stopwatch.online/" target="_blank"><h3>在线秒表</h3><p>精准计时、倒计时</p></a>
-<a class="tool-card" data-tags="util" href="https://noisecollector.org/" target="_blank"><h3>分贝测试</h3><p>麦克风测环境噪音</p></a>
-<a class="tool-card" data-tags="util" href="https://www.unitconverters.net/" target="_blank"><h3>单位换算</h3><p>长度、重量、温度、速度</p></a>
-<a class="tool-card" data-tags="util" href="https://www.xe.com/zh/currencyconverter/" target="_blank"><h3>汇率换算</h3><p>实时全球货币换算</p></a>
-<a class="tool-card" data-tags="util" href="https://passwordsgenerator.net/" target="_blank"><h3>密码生成</h3><p>高强度随机密码</p></a>
-<a class="tool-card" data-tags="util" href="https://www.uuidgenerator.net/" target="_blank"><h3>UUID生成</h3><p>唯一标识符生成</p></a>
-<a class="tool-card" data-tags="util" href="https://emn178.github.io/online-tools/md5.html" target="_blank"><h3>MD5加密</h3><p>文本MD5加密计算</p></a>
-<a class="tool-card" data-tags="util" href="https://emn178.github.io/online-tools/sha256.html" target="_blank"><h3>SHA加密</h3><p>SHA1/SHA256加密</p></a>
-<a class="tool-card" data-tags="util" href="https://www.base64encode.org/" target="_blank"><h3>Base64编码</h3><p>Base64加解密</p></a>
-<a class="tool-card" data-tags="util" href="https://www.urlencoder.org/" target="_blank"><h3>URL编码</h3><p>网址编码解码</p></a>
-<a class="tool-card" data-tags="util" href="https://r12a.github.io/uniview/" target="_blank"><h3>Unicode转换</h3><p>中文与Unicode互转</p></a>
-<a class="tool-card" data-tags="util" href="https://www.asciitohex.com/" target="_blank"><h3>ASCII转换</h3><p>字符与ASCII互转</p></a>
-<a class="tool-card" data-tags="util" href="https://convertcase.net/" target="_blank"><h3>大小写转换</h3><p>英文大小写快速切换</p></a>
-<a class="tool-card" data-tags="util" href="https://charactercounttool.com/" target="_blank"><h3>字数统计</h3><p>文字、字符、行数统计</p></a>
-<a class="tool-card" data-tags="util" href="https://www.zhconvert.org/" target="_blank"><h3>简繁转换</h3><p>简体繁体互相转换</p></a>
-<a class="tool-card" data-tags="util" href="https://pinyinConverter.com/" target="_blank"><h3>拼音转换</h3><p>汉字转拼音</p></a>
-<a class="tool-card" data-tags="util" href="https://ocr.space/" target="_blank"><h3>图片转文字</h3><p>OCR文字识别</p></a>
-<a class="tool-card" data-tags="util" href="https://www.removeduplicates.net/" target="_blank"><h3>文本去重</h3><p>自动去除重复行</p></a>
-<a class="tool-card" data-tags="util" href="https://textreverse.net/" target="_blank"><h3>文本倒序</h3><p>文字行倒序排列</p></a>
-<a class="tool-card" data-tags="util" href="https://removeblanklines.com/" target="_blank"><h3>空行删除</h3><p>一键清理多余空行</p></a>
-<a class="tool-card" data-tags="util" href="https://www.rapidtables.com/convert/number/base-converter.html" target="_blank"><h3>进制转换</h3><p>二/八/十/十六进制互转</p></a>
-<a class="tool-card" data-tags="util" href="https://www.epochconverter.com/" target="_blank"><h3>时间戳转换</h3><p>Unix时间戳格式化</p></a>
-<a class="tool-card" data-tags="util" href="https://htmlcolorcodes.com/color-picker/" target="_blank"><h3>颜色拾取</h3><p>在线取色器</p></a>
-<a class="tool-card" data-tags="util" href="https://www.base64-image.de/" target="_blank"><h3>图片转Base64</h3><p>图片转编码字符串</p></a>
-<a class="tool-card" data-tags="util" href="https://www.favicon-generator.org/" target="_blank"><h3>ICO转换</h3><p>图片转图标文件</p></a>
-<a class="tool-card" data-tags="util" href="https://magnetdl.com/" target="_blank"><h3>磁力搜索</h3><p>资源磁力链接查询</p></a>
-<a class="tool-card" data-tags="util" href="https://bitly.com/" target="_blank><h3>短链接</h3><p>网址缩短服务</p></a>
-<a class="tool-card" data-tags="util" href="https://www.browserinfo.com/" target="_blank"><h3>浏览器信息</h3><p>查看设备UA信息</p></a>
+<!-- 工具卡片会自动渲染，保留原结构并添加收藏/点赞按钮 -->
+</div>
+
+<!-- 个人中心弹窗 -->
+<div class="modal" id="profile-modal">
+  <div class="modal-content">
+    <button class="close-modal" onclick="hideProfile()">×</button>
+    <div class="profile-header">
+      <img src="" alt="头像" class="profile-avatar" id="profile-avatar">
+      <div class="profile-nickname" id="profile-nickname"></div>
+      <div class="profile-username" id="profile-username"></div>
+      <div class="profile-create" id="profile-create"></div>
+    </div>
+    
+    <div class="profile-form">
+      <h4 style="margin-bottom:10px">修改信息</h4>
+      <input type="text" class="profile-input" id="new-nickname" placeholder="新昵称">
+      <input type="text" class="profile-input" id="new-avatar" placeholder="头像URL (留空则随机)">
+      <button class="profile-save" onclick="updateProfile()">保存修改</button>
+    </div>
+
+    <div class="my-tools-title">我的收藏</div>
+    <div class="my-tools-list" id="my-favorites-list"></div>
+
+    <div class="my-tools-title">我的点赞</div>
+    <div class="my-tools-list" id="my-likes-list"></div>
+  </div>
 </div>
 
 <button id="toTop">↑</button>
@@ -501,15 +614,150 @@ body {
 </div>
 
 <script>
-const API = "https://api-tools-list.tanjingwen2023-8fa.workers.dev";
+// 服务器地址（替换为你的公网IP）
+const API_BASE = "http://8.155.56.233:8080";
 
-// 加载
+// 工具数据（提取原页面的工具列表）
+const toolsData = [
+  { name: "CodePen", desc: "在线前端代码编辑器，实时预览HTML/CSS/JS", tags: "dev", url: "https://codepen.io/" },
+  { name: "JSFiddle", desc: "轻量级前端在线调试工具", tags: "dev", url: "https://jsfiddle.net/" },
+  { name: "CodeSandbox", desc: "在线IDE，支持Vue/React项目", tags: "dev", url: "https://codesandbox.io/" },
+  { name: "StackBlitz", desc: "浏览器里的VS Code，超快启动", tags: "dev", url: "https://stackblitz.com/" },
+  { name: "JSON.cn", desc: "JSON格式化、校验、压缩、高亮", tags: "dev", url: "https://www.json.cn/" },
+  { name: "JSONLint", desc: "JSON校验与格式化工具", tags: "dev", url: "https://jsonlint.com/" },
+  { name: "Regex101", desc: "在线正则表达式测试、调试", tags: "dev", url: "https://regex101.com/" },
+  { name: "Diff Checker", desc: "文本/代码对比，快速找差异", tags: "dev", url: "https://www.diffchecker.com/" },
+  { name: "IP138", desc: "IP查询、域名信息、手机号归属地", tags: "dev", url: "https://www.ip138.com/" },
+  { name: "JsDelivr", desc: "免费高速CDN，前端资源加速", tags: "dev", url: "https://www.jsdelivr.com/" },
+  { name: "unpkg", desc: "npm包快速CDN服务", tags: "dev", url: "https://unpkg.com/" },
+  { name: "Can I Use", desc: "查询浏览器CSS/JS兼容性", tags: "dev", url: "https://caniuse.com/" },
+  { name: "Remove.bg", desc: "一键自动抠图去背景", tags: "img", url: "https://www.remove.bg/" },
+  { name: "TinyPNG", desc: "智能压缩图片，几乎无损", tags: "img", url: "https://tinypng.com/" },
+  { name: "Squoosh", desc: "谷歌出品图片压缩工具", tags: "img", url: "https://squoosh.app/" },
+  { name: "ILoveIMG", desc: "图片裁剪、旋转、转换、压缩", tags: "img", url: "https://www.iloveimg.com/zh-cn" },
+  { name: "Canva 可画", desc: "海报、封面、PPT、视频设计", tags: "img", url: "https://www.canva.com/" },
+  { name: "Unsplash", desc: "免费可商用高清图片", tags: "img", url: "https://unsplash.com/" },
+  { name: "Pexels", desc: "免费图片+视频素材库", tags: "img", url: "https://www.pexels.com/" },
+  { name: "Pixabay", desc: "无版权图片、视频、音频", tags: "img", url: "https://pixabay.com/" },
+  { name: "Coolors", desc: "快速生成高颜值配色", tags: "img", url: "https://www.coolors.co/" },
+  { name: "UI Gradients", desc: "渐变色CSS一键复制", tags: "img", url: "https://uigradients.com/" },
+  { name: "FontSpace", desc: "免费可商用字体下载", tags: "img", url: "https://www.fontspace.com/" },
+  { name: "Google Fonts", desc: "谷歌免费英文字体库", tags: "img", url: "https://fonts.google.com/" },
+  { name: "ILovePDF", desc: "PDF合并、拆分、压缩、转换", tags: "pdf", url: "https://www.ilovepdf.com/zh-cn" },
+  { name: "PDF24", desc: "PDF全能工具箱，全免费", tags: "pdf", url: "https://www.pdf24.org/zh/" },
+  { name: "SmallPDF", desc: "简洁好用的PDF处理工具", tags: "pdf", url: "https://smallpdf.com/cn" },
+  { name: "Convertio", desc: "全格式文件转换", tags: "file", url: "https://convertio.co/zh/" },
+  { name: "10015 工具集", desc: "格式转换、压缩、文本处理", tags: "file", url: "https://10015.io/" },
+  { name: "Time.is", desc: "精确世界时间、时区转换", tags: "util", url: "https://time.is/" },
+  { name: "二维码生成", desc: "网址、文本、WiFi二维码", tags: "util", url: "https://www.qr-code-generator.com/" },
+  { name: "在线尺子", desc: "在线屏幕尺寸测量", tags: "util", url: "https://iruler.herokuapp.com/" },
+  { name: "Notion", desc: "全能笔记、文档、知识库", tags: "util", url: "https://www.notion.so/" },
+  { name: "Tldraw", desc: "极简在线白板、思维导图", tags: "util", url: "https://tldraw.com/" },
+  { name: "Excalidraw", desc: "手绘风格白板流程图", tags: "util", url: "https://excalidraw.com/" },
+  { name: "ScreenPal", desc: "免费屏幕录制与截图", tags: "util", url: "https://www.screenpal.com/" },
+  { name: "PrintFriendly", desc: "网页干净打印、去广告", tags: "util", url: "https://www.printfriendly.com/" },
+  { name: "错别字检查", desc: "快速检查文本错别字", tags: "util", url: "https://www.mistakes.info/" },
+  { name: "随机数生成", desc: "真随机数、抽奖、抽签", tags: "util", url: "https://www.random.org/" },
+  { name: "Y2mate", desc: "在线视频下载解析", tags: "video", url: "https://www.y2mate.com/zh-cn" },
+  { name: "Veed", desc: "在线视频剪辑、加字幕", tags: "video", url: "https://www.veed.io/" },
+  { name: "CapCut 剪映", desc: "网页版剪映，免费剪辑", tags: "video", url: "https://www.capcut.com/zh-cn/" },
+  { name: "W3Schools", desc: "前端编程学习教程", tags: "dev", url: "https://www.w3schools.com/" },
+  { name: "MDN", desc: "官方Web技术文档", tags: "dev", url: "https://developer.mozilla.org/zh-CN/" },
+  { name: "gitignore.io", desc: "生成Git忽略文件", tags: "dev", url: "https://www.toptal.com/developers/gitignore" },
+  { name: "Pixlr", desc: "在线PS，功能强大", tags: "img", url: "https://pixlr.com/zh-cn/" },
+  { name: "Photopea", desc: "网页版Photoshop", tags: "img", url: "https://www.photopea.com/" },
+  { name: "在线秒表", desc: "精准计时、倒计时", tags: "util", url: "https://stopwatch.online/" },
+  { name: "分贝测试", desc: "麦克风测环境噪音", tags: "util", url: "https://noisecollector.org/" },
+  { name: "单位换算", desc: "长度、重量、温度、速度", tags: "util", url: "https://www.unitconverters.net/" },
+  { name: "汇率换算", desc: "实时全球货币换算", tags: "util", url: "https://www.xe.com/zh/currencyconverter/" },
+  { name: "密码生成", desc: "高强度随机密码", tags: "util", url: "https://passwordsgenerator.net/" },
+  { name: "UUID生成", desc: "唯一标识符生成", tags: "util", url: "https://www.uuidgenerator.net/" },
+  { name: "MD5加密", desc: "文本MD5加密计算", tags: "util", url: "https://emn178.github.io/online-tools/md5.html" },
+  { name: "SHA加密", desc: "SHA1/SHA256加密", tags: "util", url: "https://emn178.github.io/online-tools/sha256.html" },
+  { name: "Base64编码", desc: "Base64加解密", tags: "util", url: "https://www.base64encode.org/" },
+  { name: "URL编码", desc: "网址编码解码", tags: "util", url: "https://www.urlencoder.org/" },
+  { name: "Unicode转换", desc: "中文与Unicode互转", tags: "util", url: "https://r12a.github.io/uniview/" },
+  { name: "ASCII转换", desc: "字符与ASCII互转", tags: "util", url: "https://www.asciitohex.com/" },
+  { name: "大小写转换", desc: "英文大小写快速切换", tags: "util", url: "https://convertcase.net/" },
+  { name: "字数统计", desc: "文字、字符、行数统计", tags: "util", url: "https://charactercounttool.com/" },
+  { name: "简繁转换", desc: "简体繁体互相转换", tags: "util", url: "https://www.zhconvert.org/" },
+  { name: "拼音转换", desc: "汉字转拼音", tags: "util", url: "https://pinyinConverter.com/" },
+  { name: "图片转文字", desc: "OCR文字识别", tags: "util", url: "https://ocr.space/" },
+  { name: "文本去重", desc: "自动去除重复行", tags: "util", url: "https://www.removeduplicates.net/" },
+  { name: "文本倒序", desc: "文字行倒序排列", tags: "util", url: "https://textreverse.net/" },
+  { name: "空行删除", desc: "一键清理多余空行", tags: "util", url: "https://removeblanklines.com/" },
+  { name: "进制转换", desc: "二/八/十/十六进制互转", tags: "util", url: "https://www.rapidtables.com/convert/number/base-converter.html" },
+  { name: "时间戳转换", desc: "Unix时间戳格式化", tags: "util", url: "https://www.epochconverter.com/" },
+  { name: "颜色拾取", desc: "在线取色器", tags: "util", url: "https://htmlcolorcodes.com/color-picker/" },
+  { name: "图片转Base64", desc: "图片转编码字符串", tags: "util", url: "https://www.base64-image.de/" },
+  { name: "ICO转换", desc: "图片转图标文件", tags: "util", url: "https://www.favicon-generator.org/" },
+  { name: "磁力搜索", desc: "资源磁力链接查询", tags: "util", url: "https://magnetdl.com/" },
+  { name: "短链接", desc: "网址缩短服务", tags: "util", url: "https://bitly.com/" },
+  { name: "浏览器信息", desc: "查看设备UA信息", tags: "util", url: "https://www.browserinfo.com/" }
+];
+
+// 全局变量
+let myFavorites = []; // 我的收藏
+let myLikes = [];     // 我的点赞
+let currentUser = null;
+
+// 加载动画
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
+  renderTools(); // 渲染工具列表
   setTimeout(() => loader.classList.add('gone'), 500);
+  checkLogin(); // 检查登录状态
 });
 
-// 主题
+// 渲染工具列表
+function renderTools(filter = "all") {
+  const listContainer = document.getElementById('list');
+  listContainer.innerHTML = "";
+  
+  let filteredTools = toolsData;
+  if (filter === "myfavs") {
+    filteredTools = toolsData.filter(tool => myFavorites.includes(tool.name));
+  } else if (filter === "mylikes") {
+    filteredTools = toolsData.filter(tool => myLikes.includes(tool.name));
+  } else if (filter !== "all") {
+    filteredTools = toolsData.filter(tool => tool.tags.includes(filter));
+  }
+
+  if (filteredTools.length === 0) {
+    listContainer.innerHTML = '<div class="empty">暂无相关工具</div>';
+    return;
+  }
+
+  filteredTools.forEach(tool => {
+    const isFavorited = myFavorites.includes(tool.name);
+    const isLiked = myLikes.includes(tool.name);
+    
+    const card = document.createElement('a');
+    card.className = "tool-card";
+    card.dataset.tags = tool.tags;
+    card.href = tool.url;
+    card.target = "_blank";
+    card.innerHTML = `
+      <div class="tool-actions">
+        <button class="action-btn favorite-btn ${isFavorited ? 'favorited' : ''}" 
+                onclick="toggleFavorite(event, '${tool.name}')" 
+                title="${isFavorited ? '取消收藏' : '收藏'}">
+          ${isFavorited ? '❤️' : '♡'}
+        </button>
+        <button class="action-btn like-btn ${isLiked ? 'liked' : ''}" 
+                onclick="toggleLike(event, '${tool.name}')" 
+                title="${isLiked ? '取消点赞' : '点赞'}">
+          ${isLiked ? '👍' : '⊕'}
+        </button>
+      </div>
+      <h3>${tool.name}</h3>
+      <p>${tool.desc}</p>
+    `;
+    listContainer.appendChild(card);
+  });
+}
+
+// 主题切换
 const themes = document.querySelectorAll('.theme-btn');
 themes.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -519,101 +767,370 @@ themes.forEach(btn => {
     localStorage.setItem('theme', btn.dataset.theme);
   });
 });
-const saved = localStorage.getItem('theme');
-if(saved) {
-  document.body.className = saved;
-  document.querySelector(`[data-theme="${saved}"]`).classList.add('active');
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme) {
+  document.body.className = savedTheme;
+  document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
 }
 
-// 分类
+// 分类切换
 const cats = document.querySelectorAll('.cat');
-const cards = document.querySelectorAll('.tool-card');
 cats.forEach(cat => {
   cat.addEventListener('click', () => {
     cats.forEach(c => c.classList.remove('active'));
     cat.classList.add('active');
-    const t = cat.dataset.cat;
-    cards.forEach(c => {
-      if(t === 'all' || c.dataset.tags.includes(t)) c.style.display = 'block';
-      else c.style.display = 'none';
-    });
+    renderTools(cat.dataset.cat);
   });
 });
 
-// 搜索
-const search = document.getElementById('search');
-search.addEventListener('input', () => {
-  const kw = search.value.toLowerCase().trim();
-  cards.forEach(c => {
-    const n = c.querySelector('h3').innerText.toLowerCase();
-    const d = c.querySelector('p').innerText.toLowerCase();
-    if(n.includes(kw) || d.includes(kw)) c.style.display = 'block';
-    else c.style.display = 'none';
+// 搜索功能
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', () => {
+  const kw = searchInput.value.toLowerCase().trim();
+  const listContainer = document.getElementById('list');
+  const cards = listContainer.querySelectorAll('.tool-card');
+  
+  cards.forEach(card => {
+    const name = card.querySelector('h3').innerText.toLowerCase();
+    const desc = card.querySelector('p').innerText.toLowerCase();
+    card.style.display = (name.includes(kw) || desc.includes(kw)) ? 'block' : 'none';
   });
 });
 
 // 回到顶部
-const toTop = document.getElementById('toTop');
+const toTopBtn = document.getElementById('toTop');
 window.addEventListener('scroll', () => {
-  if(window.scrollY > 300) toTop.classList.add('show');
-  else toTop.classList.remove('show');
+  toTopBtn.classList.toggle('show', window.scrollY > 300);
 });
-toTop.addEventListener('click', () => {
+toTopBtn.addEventListener('click', () => {
   window.scrollTo({ top:0, behavior: 'smooth' });
 });
 
-// 登录
-window.onload = () => {
-  const t = localStorage.getItem("token");
-  if (t) setUser(t);
-};
+// ===== 登录/注册功能 =====
+function checkLogin() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    // 验证token并加载用户信息
+    fetch(`${API_BASE}/api/user/info`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        currentUser = data.data;
+        updateUserUI();
+        loadMyFavorites();
+        loadMyLikes();
+        // 显示"我的收藏/点赞"分类
+        document.getElementById('myfavs-cat').style.display = 'block';
+        document.getElementById('mylikes-cat').style.display = 'block';
+      } else {
+        logout();
+      }
+    })
+    .catch(() => logout());
+  } else {
+    // 未登录隐藏个人分类
+    document.getElementById('myfavs-cat').style.display = 'none';
+    document.getElementById('mylikes-cat').style.display = 'none';
+  }
+}
 
-function getToken() {
-  return localStorage.getItem("token");
+function updateUserUI() {
+  document.getElementById('uname').textContent = currentUser.nickname;
+  document.getElementById('user-avatar').src = currentUser.avatar;
+  document.getElementById('login-box').style.display = 'none';
+  document.getElementById('user-info').style.display = 'flex';
 }
 
 function logout() {
   localStorage.removeItem("token");
-  location.reload();
-}
-
-function setUser(token) {
-  try {
-    const obj = JSON.parse(atob(token));
-    if (obj.exp < Date.now()) { logout(); return; }
-    document.getElementById("uname").innerText = obj.user;
-    document.getElementById("login-box").style.display = "none";
-    document.getElementById("user-info").style.display = "flex";
-  } catch (e) { logout(); }
+  currentUser = null;
+  myFavorites = [];
+  myLikes = [];
+  document.getElementById('login-box').style.display = 'flex';
+  document.getElementById('user-info').style.display = 'none';
+  document.getElementById('myfavs-cat').style.display = 'none';
+  document.getElementById('mylikes-cat').style.display = 'none';
+  renderTools(); // 重新渲染工具列表
 }
 
 async function login() {
-  const u = document.getElementById("username").value.trim();
-  const p = document.getElementById("password").value.trim();
-  if (!u || !p) { alert("请输入用户名和密码"); return; }
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  
+  if (!username || !password) {
+    alert("请输入用户名和密码");
+    return;
+  }
+
   try {
-    const r = await fetch(API+"/api/login", {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ username:u, password:p })
+    const res = await fetch(`${API_BASE}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
     });
-    const d = await r.json();
-    if (d.ok) { localStorage.setItem("token", d.token); setUser(d.token); alert("登录成功"); }
-    else alert(d.msg);
-  } catch(e){ alert("登录失败"); }
+    const data = await res.json();
+    
+    if (data.success) {
+      localStorage.setItem("token", data.token);
+      alert("登录成功！");
+      checkLogin();
+    } else {
+      alert(data.msg || "登录失败");
+    }
+  } catch (e) {
+    alert("登录失败：" + e.message);
+  }
 }
 
 async function register() {
-  const u = document.getElementById("username").value.trim();
-  const p = document.getElementById("password").value.trim();
-  if (!u || !p) { alert("请输入用户名和密码"); return; }
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  
+  if (!username || !password) {
+    alert("请输入用户名和密码");
+    return;
+  }
+
   try {
-    const r = await fetch(API+"/api/register", {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ username:u, password:p })
+    const res = await fetch(`${API_BASE}/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
     });
-    const d = await r.json();
-    alert(d.msg);
-  } catch(e){ alert("注册失败"); }
+    const data = await res.json();
+    
+    alert(data.msg || "注册失败");
+    if (data.success) {
+      document.getElementById('password').value = "";
+    }
+  } catch (e) {
+    alert("注册失败：" + e.message);
+  }
+}
+
+// ===== 收藏功能 =====
+async function loadMyFavorites() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/tool/myfavorites`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      myFavorites = data.data;
+      renderTools(); // 重新渲染工具状态
+      updateMyFavoritesList(); // 更新个人中心收藏列表
+    }
+  } catch (e) {
+    console.error("加载收藏失败：", e);
+  }
+}
+
+async function toggleFavorite(e, toolName) {
+  e.preventDefault(); // 阻止跳转
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("请先登录！");
+    return;
+  }
+
+  const isFavorited = myFavorites.includes(toolName);
+  const url = isFavorited ? `${API_BASE}/api/tool/unfavorite` : `${API_BASE}/api/tool/favorite`;
+  
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ toolName })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      if (isFavorited) {
+        myFavorites = myFavorites.filter(item => item !== toolName);
+      } else {
+        myFavorites.push(toolName);
+      }
+      renderTools(); // 重新渲染
+      updateMyFavoritesList(); // 更新个人中心
+      alert(data.msg);
+    } else {
+      alert(data.msg);
+    }
+  } catch (e) {
+    alert("操作失败：" + e.message);
+  }
+}
+
+// ===== 点赞功能 =====
+async function loadMyLikes() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/tool/mylikes`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      myLikes = data.data;
+      renderTools(); // 重新渲染工具状态
+      updateMyLikesList(); // 更新个人中心点赞列表
+    }
+  } catch (e) {
+    console.error("加载点赞失败：", e);
+  }
+}
+
+async function toggleLike(e, toolName) {
+  e.preventDefault(); // 阻止跳转
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("请先登录！");
+    return;
+  }
+
+  const isLiked = myLikes.includes(toolName);
+  const url = isLiked ? `${API_BASE}/api/tool/unlike` : `${API_BASE}/api/tool/like`;
+  
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ toolName })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      if (isLiked) {
+        myLikes = myLikes.filter(item => item !== toolName);
+      } else {
+        myLikes.push(toolName);
+      }
+      renderTools(); // 重新渲染
+      updateMyLikesList(); // 更新个人中心
+      alert(data.msg);
+    } else {
+      alert(data.msg);
+    }
+  } catch (e) {
+    alert("操作失败：" + e.message);
+  }
+}
+
+// ===== 个人中心 =====
+function showProfile() {
+  if (!currentUser) return;
+  
+  // 填充个人信息
+  document.getElementById('profile-avatar').src = currentUser.avatar;
+  document.getElementById('profile-nickname').textContent = currentUser.nickname;
+  document.getElementById('profile-username').textContent = `用户名：${currentUser.username}`;
+  document.getElementById('profile-create').textContent = `注册时间：${currentUser.createTime || '未知'}`;
+  
+  // 填充修改表单
+  document.getElementById('new-nickname').value = currentUser.nickname;
+  document.getElementById('new-avatar').value = currentUser.avatar;
+  
+  // 更新收藏/点赞列表
+  updateMyFavoritesList();
+  updateMyLikesList();
+  
+  // 显示弹窗
+  document.getElementById('profile-modal').classList.add('show');
+}
+
+function hideProfile() {
+  document.getElementById('profile-modal').classList.remove('show');
+}
+
+function updateMyFavoritesList() {
+  const listEl = document.getElementById('my-favorites-list');
+  listEl.innerHTML = "";
+  
+  if (myFavorites.length === 0) {
+    listEl.innerHTML = '<div style="color:var(--subtext);padding:10px 0">暂无收藏</div>';
+    return;
+  }
+  
+  myFavorites.forEach(toolName => {
+    const item = document.createElement('div');
+    item.className = "my-tool-item";
+    item.innerHTML = `
+      <span>${toolName}</span>
+      <span class="my-tool-remove" onclick="toggleFavorite(null, '${toolName}')">取消</span>
+    `;
+    listEl.appendChild(item);
+  });
+}
+
+function updateMyLikesList() {
+  const listEl = document.getElementById('my-likes-list');
+  listEl.innerHTML = "";
+  
+  if (myLikes.length === 0) {
+    listEl.innerHTML = '<div style="color:var(--subtext);padding:10px 0">暂无点赞</div>';
+    return;
+  }
+  
+  myLikes.forEach(toolName => {
+    const item = document.createElement('div');
+    item.className = "my-tool-item";
+    item.innerHTML = `
+      <span>${toolName}</span>
+      <span class="my-tool-remove" onclick="toggleLike(null, '${toolName}')">取消</span>
+    `;
+    listEl.appendChild(item);
+  });
+}
+
+async function updateProfile() {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+  
+  const newNickname = document.getElementById('new-nickname').value.trim();
+  const newAvatar = document.getElementById('new-avatar').value.trim() || `https://ui-avatars.com/api/?name=${newNickname}&background=random`;
+  
+  if (!newNickname) {
+    alert("昵称不能为空！");
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/user/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ nickname: newNickname, avatar: newAvatar })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      currentUser.nickname = newNickname;
+      currentUser.avatar = newAvatar;
+      updateUserUI();
+      showProfile(); // 刷新弹窗
+      alert("修改成功！");
+    } else {
+      alert(data.msg);
+    }
+  } catch (e) {
+    alert("修改失败：" + e.message);
+  }
 }
 </script>
 </body>
